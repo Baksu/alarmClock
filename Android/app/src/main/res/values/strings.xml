@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Budzik</string>
+
+    <string name="add_time">Nowy alarm</string>
+    <string name="lista">Lista</string>
+    <string name="ustawienia">Ustawienia</string>
+
+    <string name="name_label">Nazwa alarmu</string>
+    <string name="name_hint">Wpisz nazwe</string>
+    <string name="puzzle_label">Czy chcesz wyświetlać zagadki?</string>
+    <string name="vibration_label">Czy chcesz włączyć wybracje?</string>
+    <string name="volume_label">Ustawienie głośności</string>
+
+    <string name="save">Zapisz</string>
+    <string name="cancel">Anuluj</string>
+
+</resources>
