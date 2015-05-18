@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by Baksu on 2015-05-02.
  */
@@ -37,6 +39,7 @@ public class TimeAdapter extends ArrayAdapter<Time>{
             holder = new TimeHolder();
             holder.time = (TextView)row.findViewById(R.id.time);
             holder.days = (TextView)row.findViewById(R.id.days);
+            holder.name = (TextView)row.findViewById(R.id.name);
             holder.turnOn = (CheckBox)row.findViewById(R.id.checkbox);
 
             row.setTag(holder);
@@ -46,6 +49,8 @@ public class TimeAdapter extends ArrayAdapter<Time>{
 
         Time time = data[position];
         holder.time.setText(Integer.toString(time.minutes)+":"+Integer.toString(time.second));
+        holder.name.setText(time.name);
+        holder.turnOn.setChecked(time.on);
 
         return row;
     }
@@ -53,6 +58,7 @@ public class TimeAdapter extends ArrayAdapter<Time>{
     static class TimeHolder{
         TextView time;
         TextView days;
+        TextView name;
         CheckBox turnOn;
     }
 }

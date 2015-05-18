@@ -16,4 +16,12 @@
     <string name="save">Zapisz</string>
     <string name="cancel">Anuluj</string>
 
+    <string name="jsonHour">Hour</string>
+    <string name="jsonMinutes">Minutes</string>
+    <string name="jsonName">Name</string>
+    <string name="jsonRidle">Ridle</string>
+    <string name="jsonVibration">Vibration</string>
+    <string name="jsonVolume">Volume</string>
+    <string name="jsonOn">On</string>
+
 </resources>

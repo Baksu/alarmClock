@@ -2,6 +2,7 @@ package com.example.budzik;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TimePicker;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +25,9 @@ public class NewTime extends Activity {
     private CheckBox ridle, vibration;
     private SeekBar volume;
     private final Boolean time24Format = true;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor prefEditor;
+    private JSONArray timesArray;
 
 
     @Override
@@ -41,6 +46,13 @@ public class NewTime extends Activity {
         vibration = (CheckBox)findViewById(R.id.check_box_vibration);
         volume = (SeekBar)findViewById(R.id.seek_bar_volume);
 
+        sharedPref = getSharedPreferences( "Times", Context.MODE_PRIVATE );
+        prefEditor = getSharedPreferences( "Times", Context.MODE_PRIVATE ).edit();
+        try {
+            timesArray = new JSONArray(sharedPref.getString("timesArray",""));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -53,23 +65,32 @@ public class NewTime extends Activity {
         }
     }
 
-    private void createJSON(){
+    private JSONObject createJSON(){
         JSONObject json = new JSONObject();
         try {
-            json.put("Hour",timePicker.getCurrentHour());
-            json.put("Minutes", timePicker.getCurrentMinute());
-            json.put("Name", alarmName.getText());
-            json.put("Ridle", ridle.isChecked() );
-            json.put("Vibration", vibration.isChecked());
-            json.put("Volume", volume.getProgress());
+            json.put(String.valueOf(R.string.jsonHour),timePicker.getCurrentHour());
+            json.put(String.valueOf(R.string.jsonMinutes), timePicker.getCurrentMinute());
+            json.put(String.valueOf(R.string.jsonName), alarmName.getText());
+            json.put(String.valueOf(R.string.jsonRidle), ridle.isChecked() );
+            json.put(String.valueOf(R.string.jsonVibration), vibration.isChecked());
+            json.put(String.valueOf(R.string.jsonVolume), volume.getProgress());
+            json.put(String.valueOf(R.string.jsonOn), true);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String str = json.toString();
-    }
+        timesArray.put(json);
+        prefEditor.putString("timesArray",timesArray.toString());
+        prefEditor.commit();
 
+        return json;
+    }
+//TODO: zastanowić się czy ma to tak wyglądać
     private void saveTime(){
-        createJSON();
+        JSONObject newTime = createJSON();
+        Intent intent = new Intent();
+        intent.putExtra("newTime",newTime.toString());
+        setResult(RESULT_OK, intent);
+        this.finish();
     }
 }
 
